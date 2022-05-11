@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template ,flash
 from flask_wtf import FlaskForm
 from wtforms import StringField,SubmitField
 from wtforms.validators import  DataRequired
@@ -26,11 +26,12 @@ def hello_world():
 def signup():
     name = None
     form = SignForm()
-    #Validation
 
+    #Validation
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
+        flash("User Added Successfully!")
     return render_template('signup.html',
         name=name,
         form=form)
