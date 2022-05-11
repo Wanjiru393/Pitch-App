@@ -5,6 +5,19 @@
 
 {% block content %}
 
-<h1> Sign Up to Add Pitch</h1>
+    {% if name %}
+        <h1>Hello {{name}}</h1>
+        {% else %}
+        <h1>Input your name</h1>
+        <br/>
+        <form method="POST">
+            {{ form.hidden_tag()}}
+            {{ form.name.label}}
+            {{form.name()}}
+            <br/>
+            {{ form.submit()}}
+
+        </form>
+    {%endif%}
 
 {% endblock %}
