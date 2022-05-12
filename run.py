@@ -1,7 +1,7 @@
 from flask import Flask,render_template ,flash
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField
-from wtforms.validators import  DataRequired
+from wtforms import StringField,SubmitField, PasswordField,BooleanField,ValidationError
+from wtforms.validators import  DataRequired,EqualTo,Length
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -47,14 +47,17 @@ class Users(db.Model,UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    #Create String
 
+
+    #Create String
     def __repr__(self):
         return '<Name %r>' % self.name
 
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
+    password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo('password_hash2',message='Password should match')])
+    password_hash2 =PasswordField('Confirm password', validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
