@@ -1,0 +1,33 @@
+{%extends 'base.html' %}
+
+{% block title %} {% endblock%}
+
+
+{% block content %}
+
+        {% if name %}
+            <h1>Hello {{name}}</h1>
+            <br/>
+
+            {% else %}
+            <h4>User List:</h4>
+            <br/>
+            <form method="POST">
+                {{ form.hidden_tag()}}
+                {{ form.name.label(class="form-label")}}
+                {{form.name(class="form-control")}}
+                <br/>
+
+                 {{ form.email.label(class="form-label")}}
+                {{form.email(class="form-control")}}
+                <br/>
+
+                {{ form.submit(class="btn btn-primary")}}
+            </form>
+        {%endif%}
+
+
+<h1>Welcome to pitch app</h1>
+
+
+{% endblock %}
