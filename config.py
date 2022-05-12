@@ -19,6 +19,7 @@ class Config:
     SIMPLEMDE_USE_CDN = True
 
 
+
 class ProdConfig(Config):
     """Production Config Class"""
 
