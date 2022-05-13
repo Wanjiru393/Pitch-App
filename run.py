@@ -34,6 +34,7 @@ class Pitches(db.Model):
     title = db.Column(db.String(250))
     content = db.Column(db.Text)
     author = db.Column(db.String())
+    date_posted = db.Column(db.DateTime, default=datetime)
     
 
 #Pitch Form
@@ -41,8 +42,14 @@ class PitchForm(FlaskForm):
     title = StringField("Title",validators=[DataRequired()])
     content = StringField("Content", validators=[DataRequired()], widget=TextArea())
     author = StringField("Author", validators=[DataRequired()])
-    submit = StringField("Submit")
+    submit = SubmitField("Submit")
 
+
+@app.route('/pitches')
+def pitches():
+    pitches= Pitches.query.order_by(Pitches.date_posted)
+
+    return render_template("pitches.html",pitches=pitches)
 
 #Post Page
 @app.route('/add-pitch', methods=['GET','POST'])
@@ -66,13 +73,6 @@ def add_pitch():
 
     return render_template("add_pitch.html",
     form=form)
-
-
-
-
-
-
-
 
 
 
@@ -105,7 +105,7 @@ class Users(db.Model,UserMixin):
 
 
 
-@app.route('/dlete/<int:id>')
+@app.route('/delete/<int:id>')
 def delete(id):
     user_to_delete =Users.query.get_or_404(id)
     name = None
