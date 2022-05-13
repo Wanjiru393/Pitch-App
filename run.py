@@ -34,14 +34,13 @@ class Pitches(db.Model):
     title = db.Column(db.String(250))
     content = db.Column(db.Text)
     author = db.Column(db.String())
-    slug = db.Column(db.String(250))
+    
 
 #Pitch Form
 class PitchForm(FlaskForm):
     title = StringField("Title",validators=[DataRequired()])
     content = StringField("Content", validators=[DataRequired()], widget=TextArea())
     author = StringField("Author", validators=[DataRequired()])
-    slug = StringField("Slug", validators=[DataRequired()])
     submit = StringField("Submit")
 
 
@@ -52,13 +51,12 @@ def add_pitch():
 
     if form.validate_on_submit():
         pitch = Pitches(title=form.title.data, content=form.content.data,
-        author=form.author.data, slug=form.slug.data
+        author=form.author.data
         )
         #Clear form
         form.title.data = ''
         form.content.data = ''
         form.author.data = ''
-        form.slug.data = ''
         
         #Add Pitch DataBase
         db.session.add(pitch)
