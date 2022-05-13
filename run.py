@@ -48,11 +48,38 @@ class Users(db.Model,UserMixin):
         return check_password_hash(self.password_hash, password)
 
 
-
-    #Create String
+      #Create String
     def __repr__(self):
         return '<Name %r>' % self.name
 
+
+
+@app.route('/dlete/<int:id>')
+def delete(id):
+    user_to_delete =Users.query.get_or_404(id)
+    name = None
+    form = UserForm()
+
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User Deleted Successfully")
+
+        our_users = Users.query.order_by(Users.date_added)
+        return render_template("add_user.html",
+        form=form,
+        name=name,
+        our_users=our_users)
+
+
+    except:
+        flash("Delete Failed!!")
+        return render_template("add_user.html",
+        form=form,
+        name=name,
+        our_users=our_users)
+
+  
 
 
 class UserForm(FlaskForm):
@@ -111,7 +138,6 @@ def signup():
     if form.validate_on_submit():
         name = form.name.data
         form.name.data = ''
-        flash("User Added Successfully!")
     return render_template('signup.html',
         name=name,
         form=form)
