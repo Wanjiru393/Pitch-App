@@ -25,6 +25,18 @@ app.config['SECRET_KEY'] = "secretkeypass"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+
+
+#Pitch Model
+class Pitch(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250))
+    content = db.Column(db.Text)
+    author = db.Column(db.String())
+    slug = db.Column(db.String(250))
+
+
+
 class Users(db.Model,UserMixin):
     #Defined tablename
     __tablename__ = 'users'
