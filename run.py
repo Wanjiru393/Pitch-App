@@ -141,14 +141,6 @@ class UserForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
-
-
-# Create a Form Class
-class SignForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired()])
-    submit = SubmitField("Submit")
-
-
 @app.route("/")
 def hello_world():
     return render_template('index.html')
@@ -179,16 +171,4 @@ def add_user():
 
 
 
-#Create SignUp Page
-@app.route('/signup',methods=['GET','POST'])
-def signup():
-    name = None
-    form = SignForm()
 
-    #Validation
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ''
-    return render_template('signup.html',
-        name=name,
-        form=form)
