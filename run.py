@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_migrate import Migrate
 from flask_login import UserMixin
+from wtforms.widgets import TextArea
 
 
 app = Flask(__name__)
@@ -28,12 +29,52 @@ migrate = Migrate(app, db)
 
 
 #Pitch Model
-class Pitch(db.Model):
+class Pitches(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250))
     content = db.Column(db.Text)
     author = db.Column(db.String())
     slug = db.Column(db.String(250))
+
+#Pitch Form
+class PitchForm(FlaskForm):
+    title = StringField("Title",validators=[DataRequired()])
+    content = StringField("Content", validators=[DataRequired()], widget=TextArea())
+    author = StringField("Author", validators=[DataRequired()])
+    slug = StringField("Slug", validators=[DataRequired()])
+    submit = StringField("Submit")
+
+
+#Post Page
+@app.route('/add-pitch', methods=['GET','POST'])
+def add_pitch():
+    form = PitchForm()
+
+    if form.validate_on_submit():
+        pitch = Pitches(title=form.title.data, content=form.content.data,
+        author=form.author.data, slug=form.slug.data
+        )
+        #Clear form
+        form.title.data = ''
+        form.content.data = ''
+        form.author.data = ''
+        form.slug.data = ''
+        
+        #Add Pitch DataBase
+        db.session.add(pitch)
+        db.session.commit()
+
+        flash("Pitch Added Successfully!")
+
+    return render_template("add_pitch.html",
+    form=form)
+
+
+
+
+
+
+
 
 
 
