@@ -1,0 +1,5 @@
+Dear {{user.username}}
+Welcome to Pitch App!!
+You have successfully signed up to our application and we welcome you to the family.
+You can now enjoy pitching, liking, disliking,
+ and commenting on all your favourite pitches.

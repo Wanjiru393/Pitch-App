@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+    {% block content %}
+        {% for pitch in pitches %}
+            <div class="col-sm-4">
+                <article class="media content-section" style="border:none; border-radius: 5px;">
+                    <div class="row mb-2">
+                        <div class="col">
+                                    <p class="mr-2 mt-4 pt-4">{{ pitch.author.username }}</p>
+                        </div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
+                    </div>
+
+                            <div class="media-body">
+                                <div class="article-metadata">
+                               
+                            </div>
+                                <p class="article-content"> <span style="color: #50fefb">"</span> {{ pitch.content }} <span style="color: #50fefb">"</span> </p>
+                            </div>
+                   
+                    <div class="media-footer">
+                        <a class="ms-5" style="text-decoration: none;"></a>
+                        <a class="ms-5" style="text-decoration: none;" href="{{ url_for('main.like', pitch_id=pitch.id) }}">
+                            <span style="color:#50fefb"> {{ pitch.likes.count()}} </span>
+                        </a>
+                        <a class="ms-5" style="text-decoration: none;" href="{{ url_for('main.dislike', pitch_id=pitch.id) }}">
+                            <span style="color:#50fefb"> {{ pitch.dislikes.count()}} </span>
+                        </a>
+                        <a class="ms-5" style="text-decoration: none;" href="{{ url_for('main.comment', pitch_id=pitch.id) }}">
+                            <span style="color:#50fefb"> {{pitch.comment.count()}} </span>
+                        </a>
+                    </br>
+                        <div class="pt-2 mb-2">
+                            <small class="ms-4 text-muted align-left">Posted On: <span style="color: #50fefb">{{ pitch.datePosted.strftime('%Y-%m-%d') }}</span></small>
+                            <span>  |  </span>
+                            <small class="text-muted align-right">Category:  <span style="color: #50fefb">{{ pitch.category }}</span></small>
+                
+                        </div>
+                    </div>
+                </article>
+
+                
+            </div>
+        {% endfor %}
+    {% endblock content %}
