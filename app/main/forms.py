@@ -9,9 +9,9 @@ class PitchForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
 
     category = SelectField('Category', choices=[(
-        'General', 'General'), ('Fun', 'Fun'), ('Career', 'Career')], validators=[DataRequired()])
+        'General', 'General'), ('Pickuplines', 'Pickuplines'), ('Quotes', 'Quotes')], validators=[DataRequired()])
 
-    submit = SubmitField('Splash Pitch')
+    submit = SubmitField('Pitch')
 
 
 class CommentForm(FlaskForm):
